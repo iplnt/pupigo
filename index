@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>PupiGo - Domicilios en Pupiales</title>
+  <meta name="description" content="Pide tus productos favoritos a domicilio o retira en punto físico con PupiGo.">
+  
+  <!-- Color de la barra de estado en celulares -->
+  <meta name="theme-color" content="#FF8A00">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="PupiGo">
+
+  <!-- Favicon e Íconos para Android y iOS -->
+  <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjQlKZOVRW2I1BFj2F334YxiC4D1T8SiAh-bssx9LoTZ_czxZkexPiwkxfV_xAqieLRDkCr69JxQZH64neOjGMnKlfDkHO76BTzA9t1wjb1SXObC7SQXhz1l-D2evGqpoqXxblERteuLK2vJAMprf9zvSlsy0ZrZ8FmA-bxituGUwlrPbP0fz1aip2NST0E/s192/pupi.png">
+  <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjQlKZOVRW2I1BFj2F334YxiC4D1T8SiAh-bssx9LoTZ_czxZkexPiwkxfV_xAqieLRDkCr69JxQZH64neOjGMnKlfDkHO76BTzA9t1wjb1SXObC7SQXhz1l-D2evGqpoqXxblERteuLK2vJAMprf9zvSlsy0ZrZ8FmA-bxituGUwlrPbP0fz1aip2NST0E/s192/pupi.png">
+
+  <!-- Enlace al Manifiesto PWA -->
+  <link rel="manifest" href="./manifest.json">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #f9fafb;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .contenedor-app {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    /* Banner flotante para instalar la App */
+    #btn-instalar-pwa {
+      display: none;
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      background: linear-gradient(135deg, #FF8A00, #e67a00);
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 13px;
+      box-shadow: 0 4px 15px rgba(255, 138, 0, 0.4);
+      cursor: pointer;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      animation: bajar 0.3s ease-out;
+    }
+    @keyframes bajar {
+      from { top: -50px; opacity: 0; }
+      to { top: 12px; opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Botón de instalación rápida (Solo aparece si el navegador lo permite y no está instalada) -->
+  <button id="btn-instalar-pwa" onclick="instalarPupiGo()">
+    📲 Instalar App PupiGo
+  </button>
+
+  <!-- Contenedor Iframe de Google Apps Script -->
+  <div class="contenedor-app">
+    <iframe 
+      id="app-frame"
+      src="https://script.google.com/macros/s/AKfycbyGLRnNvpi-FQFlkQyU0ezmhBtw29I-M2ahJv-1XR0kT0Osbeq4onAh1clFW5X7n2r1/exec" 
+      allow="geolocation; microphone; camera; clipboard-read; clipboard-write">
+    </iframe>
+  </div>
+
+  <script>
+    // 1. Registrar el Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker de PupiGo registrado:', reg.scope))
+          .catch(err => console.error('Error al registrar SW:', err));
+      });
+    }
+
+    // 2. Lógica para mostrar el botón de instalar PWA en Android / PC
+    let eventoInstalacion;
+    const btnInstalar = document.getElementById('btn-instalar-pwa');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      eventoInstalacion = e;
+      btnInstalar.style.display = 'flex';
+      // Ocultar automáticamente después de 12 segundos para no estorbar el encabezado
+      setTimeout(() => { btnInstalar.style.display = 'none'; }, 12000);
+    });
+
+    async function instalarPupiGo() {
+      if (!eventoInstalacion) return;
+      eventoInstalacion.prompt();
+      const { outcome } = await eventoInstalacion.userChoice;
+      if (outcome === 'accepted') {
+        btnInstalar.style.display = 'none';
+      }
+      eventoInstalacion = null;
+    }
+
+    window.addEventListener('appinstalled', () => {
+      btnInstalar.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
