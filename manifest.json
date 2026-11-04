@@ -1,0 +1,25 @@
+{
+  "name": "PupiGo - Domicilios en Pupiales",
+  "short_name": "PupiGo",
+  "description": "Tu mercado y productos favoritos a domicilio en Pupiales. Pupiales pide, PupiGo lleva.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FF8A00",
+  "icons": [
+    {
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjQlKZOVRW2I1BFj2F334YxiC4D1T8SiAh-bssx9LoTZ_czxZkexPiwkxfV_xAqieLRDkCr69JxQZH64neOjGMnKlfDkHO76BTzA9t1wjb1SXObC7SQXhz1l-D2evGqpoqXxblERteuLK2vJAMprf9zvSlsy0ZrZ8FmA-bxituGUwlrPbP0fz1aip2NST0E/s192/pupi.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjQlKZOVRW2I1BFj2F334YxiC4D1T8SiAh-bssx9LoTZ_czxZkexPiwkxfV_xAqieLRDkCr69JxQZH64neOjGMnKlfDkHO76BTzA9t1wjb1SXObC7SQXhz1l-D2evGqpoqXxblERteuLK2vJAMprf9zvSlsy0ZrZ8FmA-bxituGUwlrPbP0fz1aip2NST0E/s512/pupi.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
