@@ -1,7 +1,7 @@
 {
   "name": "PupiGo",
   "short_name": "PupiGo",
-  "description": "Tu mercado y productos favoritos a domicilio en Pupiales. Pupiales pide, PupiGo lleva.",
+  "description": "Tu mercado y productos favoritos a domicilio. Pupiales pide, PupiGo lleva.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
